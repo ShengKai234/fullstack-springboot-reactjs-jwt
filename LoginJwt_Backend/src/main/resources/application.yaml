@@ -1,0 +1,76 @@
+# Spring Profiles
+server:
+  port: 8080
+
+---
+
+# dev
+# Database
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+      hibernate.ddl-auto: update # Hibernate ddl auto (create, create-drop, validate, update)
+
+server:
+  port: 8081
+
+# App Properties
+kai:
+  app.jwtSecret: kaiSecretKey
+  app.jwtExpirationMs: 86400000
+
+---
+
+# test
+# Database
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/testdb
+    username: postgres
+    password: postgres_password
+  jpa:
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.ddl-auto: none # Hibernate ddl auto (create, create-drop, validate, update)
+
+server:
+  port: 8080
+
+# App Properties
+kai:
+  app.jwtSecret: kaiSecretKey
+  app.jwtExpirationMs: 86400000
+
+---
+
+# prod
+# Database
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: postgres_password
+  jpa:
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.ddl-auto: none # Hibernate ddl auto (create, create-drop, validate, update)
+
+server:
+  port: 8083
+
+# App Properties
+kai:
+  app.jwtSecret: kaiSecretKey
+  app.jwtExpirationMs: 86400000
